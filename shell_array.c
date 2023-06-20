@@ -1,6 +1,19 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include "shell_array.h"
+#include "sequence.h"
+#define FALSE  0
+#define TRUE  1
+
+void swap(long *array, int ind1, int ind2);
+void printArr(long * array, int size);
+
+void swap(long *array, int ind1, int ind2)
+{
+    long temp = array[ind1];
+    array[ind1] = array[ind2];
+    array[ind2] = temp;
+}
 
 long *Array_Load_From_File(char *filename, int *size)
 {
@@ -53,7 +66,47 @@ int Array_Save_To_File(char *filename, long *array, int size)
     return size;
 }
 
+void printArray(long * array, int size)
+{
+    for(int x = 0; x < size; x++)
+    {
+        printf("%ld, ", array[x]);
+    }
+    printf("\n");
+}
+
 void Array_Shellsort(long *array, int size, long *n_comp)
 {
+    int sorted = FALSE;
+    int last_exchange;
+    int last_element;
+    int seq_size;
+    long k;
+    *n_comp = 0;
+    long * sequence = Generate_2p3q_Seq(size, &seq_size);
+
+    for(int i = seq_size - 1; i >= 0; i--)
+    {
+        k = sequence[i];
+        last_exchange = size + k - 1;
+        sorted = FALSE;
+        while(sorted == FALSE)
+        {
+            sorted = TRUE; 
+            last_element = last_exchange - k;
+            for(int j = k; j <= last_element; j++)
+            {
+                if(array[j - k] > array[j])
+                {
+                    *n_comp += 1;
+                    swap(array, j, j - k);
+                    last_exchange = j;
+                    sorted = FALSE;
+                }
+            }
+        }
+    }
+
+    free(sequence);
     
 }
