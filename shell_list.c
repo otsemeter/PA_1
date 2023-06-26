@@ -94,9 +94,6 @@ Node *List_Load_From_File(char *filename)
         curr = curr -> next;
         fread(&(curr -> value), sizeof(long), 1, fptr);
     }
-
-    Print_List(head -> next);
-
     fclose(fptr);
     return head;
 }
@@ -164,6 +161,6 @@ Node * List_Shellsort(Node * list, long * n_comp)
         }
         
     }
-    Print_List(list -> next);
+    free(sequence);
     return list;
 }
