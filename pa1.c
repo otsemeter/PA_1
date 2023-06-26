@@ -35,12 +35,20 @@ int main(int argc, char ** argv)
         long * arr = Array_Load_From_File(argv[2], &size);
         Array_Shellsort(arr, size, &n_comp);
         Array_Save_To_File(argv[3], arr, size);
+        free(arr);
     }
     else if(argv[1][1] == 'l')
     {
         Node * head = List_Load_From_File(argv[2]);
         head = List_Shellsort(head, &n_comp);
         List_Save_To_File(argv[3], head -> next);
+        Node * temp = head;
+        while(head != NULL)
+        {
+            temp = head -> next;
+            free(head);
+            head = temp;
+        }
     }
     else
     {
