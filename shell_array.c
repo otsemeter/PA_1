@@ -6,7 +6,7 @@
 #define TRUE  1
 
 void swap(long *array, int ind1, int ind2);
-void printArr(long * array, int size);
+void printArray(long * array, int size);
 
 void swap(long *array, int ind1, int ind2)
 {
@@ -46,6 +46,8 @@ long *Array_Load_From_File(char *filename, int *size)
         return NULL;
     }
 
+    //printArray(arr, count);
+
     fclose(fptr);
 
     return arr;
@@ -82,6 +84,7 @@ void Array_Shellsort(long *array, int size, long *n_comp)
     int last_element;
     int seq_size;
     long k;
+    
     *n_comp = 0;
     long * sequence = Generate_2p3q_Seq(size, &seq_size);
 
@@ -96,9 +99,9 @@ void Array_Shellsort(long *array, int size, long *n_comp)
             last_element = last_exchange - k;
             for(int j = k; j <= last_element; j++)
             {
+                *n_comp += 1;
                 if(array[j - k] > array[j])
                 {
-                    *n_comp += 1;
                     swap(array, j, j - k);
                     last_exchange = j;
                     sorted = FALSE;
